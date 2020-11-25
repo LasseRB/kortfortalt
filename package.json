@@ -2,9 +2,10 @@
   "name": "kortfortalt",
   "version": "1.0.0",
   "description": "test til kort navigation",
-  "main": "./0_test/map.js",
+  "main": "./map.js",
   "scripts": {
-    "dev": "parcel 0_test/index.html  "
+    "dev": "parcel ./index.html",
+    "build": "parcel build ./index.html --out-dir docs --public-url ./"
   },
   "author": "Lasse",
   "license": "ISC",
@@ -12,5 +13,8 @@
     "fs": "0.0.1-security",
     "path": "^0.12.7",
     "paths": "^0.1.1"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10"
   }
 }

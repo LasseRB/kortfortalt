@@ -1,0 +1,22 @@
+parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"JLez":[function(require,module,exports) {
+module.exports="volcano.23dfc80e.png";
+},{}],"nMAt":[function(require,module,exports) {
+module.exports="57Z_Hill_Test_Blu.1748e3ed.png";
+},{}],"UPVL":[function(require,module,exports) {
+module.exports="811_Hill1a.21dbb8b0.png";
+},{}],"BurL":[function(require,module,exports) {
+module.exports="9A3_Hill1b.c2abc278.png";
+},{}],"BPFv":[function(require,module,exports) {
+module.exports="D81_Hill2_Blu-a.fa0827ac.png";
+},{}],"eZPh":[function(require,module,exports) {
+module.exports="FBD_Hill1c.8349e0b0.png";
+},{}],"NN4C":[function(require,module,exports) {
+module.exports="mermaid_stone.f6098864.png";
+},{}],"NBUZ":[function(require,module,exports) {
+module.exports="pirate-ship.5802110c.png";
+},{}],"qiu3":[function(require,module,exports) {
+module.exports={"57Z_Hill_Test_Blu":require("./57Z_Hill_Test_Blu.png"),"811_Hill1a":require("./811_Hill1a.png"),"9A3_Hill1b":require("./9A3_Hill1b.png"),"D81_Hill2_Blu-a":require("./D81_Hill2_Blu-a.png"),FBD_Hill1c:require("./FBD_Hill1c.png"),mermaid_stone:require("./mermaid_stone.png"),"pirate-ship":require("./pirate-ship.png"),volcano:require("./volcano.png")};
+},{"./57Z_Hill_Test_Blu.png":"nMAt","./811_Hill1a.png":"UPVL","./9A3_Hill1b.png":"BurL","./D81_Hill2_Blu-a.png":"BPFv","./FBD_Hill1c.png":"eZPh","./mermaid_stone.png":"NN4C","./pirate-ship.png":"NBUZ","./volcano.png":"JLez"}],"quTw":[function(require,module,exports) {
+"use strict";var e=n(require("./img/islands/volcano.png")),t=n(require("./img/islands/*.png"));function n(e){return e&&e.__esModule?e:{default:e}}var i=[];for(var o in t.default)i.push(t.default[o]);var r=document.getElementById("map"),d=r.getContext("2d");r.width=window.innerWidth,r.height=800;for(var u=[],a=0;a<i.length;a++){var l={type:"island",x:m(r.width)*a%(3*r.width),y:m(r.height)*a%(3*r.height),xx:null,yy:null,width:null,heigth:null,img:new Image,imgsrc:i[a]};l.img.src=l.imgsrc,l.width=l.img.naturalWidth,l.height=l.img.naturalHeight,u.push(l)}var h={type:"square",x:0,y:0,xx:null,yy:null,width:100,heigth:100};function s(){d.strokeStyle="rgba(10, 100, 190, 0.05)",d.lineWidth=1,d.beginPath();for(var e=h.y+.5;e<=r.height;e+=60)d.moveTo(0,e),d.lineTo(r.width,e),d.stroke();for(var t=h.x;t<=2*r.width;t+=60)d.moveTo(.7*t,0),d.lineTo(t,r.width),d.stroke()}u.push(h),console.log(h.x);var f,g,c=!1;function m(e){return Math.floor(Math.random()*Math.floor(e))}function y(e){console.log(e.keyCode),32!==e.keyCode&&"mousedown"!=e.type||(c=!0,u.forEach(function(e){var t=f-e.x,n=g-e.y;e.xx=t,e.yy=n}))}function v(e){c=!1}function w(){d.fillStyle="rgb(30, 181, 200)",d.fillRect(0,0,r.width,1500)}function x(){w(),s(),p()}function p(){u.forEach(function(e){"island"===e.type&&d.drawImage(e.img,e.x,e.y)})}r.addEventListener("mousedown",y),r.addEventListener("mouseup",v),document.addEventListener("keydown",y),document.addEventListener("keyup",v),r.addEventListener("mouseout",function(e){c=!1}),r.addEventListener("mousemove",function(e){f=e.offsetX,g=e.offsetY,c&&(x(),u.forEach(function(e){e.x=-1*(e.xx-f),e.y=-1*(e.yy-g)}))}),setInterval(function(){x()},1);
+},{"./img/islands/volcano.png":"JLez","./img/islands/*.png":"qiu3"}]},{},["quTw"], null)
+//# sourceMappingURL=map.7d98b32f.js.map

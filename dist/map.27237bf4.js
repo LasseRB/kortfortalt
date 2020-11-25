@@ -119,26 +119,32 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"img/islands/volcano.png":[function(require,module,exports) {
 module.exports = "/volcano.8be98ed6.png";
-},{}],"img/islands/57Z_Hill_Test_Blu.png":[function(require,module,exports) {
-module.exports = "/57Z_Hill_Test_Blu.5c6282b1.png";
 },{}],"img/islands/811_Hill1a.png":[function(require,module,exports) {
 module.exports = "/811_Hill1a.a3a7150a.png";
-},{}],"img/islands/9A3_Hill1b.png":[function(require,module,exports) {
-module.exports = "/9A3_Hill1b.de1dcb50.png";
 },{}],"img/islands/D81_Hill2_Blu-a.png":[function(require,module,exports) {
 module.exports = "/D81_Hill2_Blu-a.17271165.png";
 },{}],"img/islands/FBD_Hill1c.png":[function(require,module,exports) {
 module.exports = "/FBD_Hill1c.2ed334e7.png";
+},{}],"img/islands/9A3_Hill1b.png":[function(require,module,exports) {
+module.exports = "/9A3_Hill1b.de1dcb50.png";
+},{}],"img/islands/mermaid_stone.png":[function(require,module,exports) {
+module.exports = "/mermaid_stone.d6a89490.png";
+},{}],"img/islands/pirate-ship.png":[function(require,module,exports) {
+module.exports = "/pirate-ship.6d34c956.png";
+},{}],"img/islands/57Z_Hill_Test_Blu.png":[function(require,module,exports) {
+module.exports = "/57Z_Hill_Test_Blu.5c6282b1.png";
 },{}],"img/islands/*.png":[function(require,module,exports) {
 module.exports = {
-  "57Z_Hill_Test_Blu": require("./57Z_Hill_Test_Blu.png"),
   "811_Hill1a": require("./811_Hill1a.png"),
-  "9A3_Hill1b": require("./9A3_Hill1b.png"),
   "D81_Hill2_Blu-a": require("./D81_Hill2_Blu-a.png"),
   "FBD_Hill1c": require("./FBD_Hill1c.png"),
-  "volcano": require("./volcano.png")
+  "9A3_Hill1b": require("./9A3_Hill1b.png"),
+  "mermaid_stone": require("./mermaid_stone.png"),
+  "volcano": require("./volcano.png"),
+  "pirate-ship": require("./pirate-ship.png"),
+  "57Z_Hill_Test_Blu": require("./57Z_Hill_Test_Blu.png")
 };
-},{"./57Z_Hill_Test_Blu.png":"img/islands/57Z_Hill_Test_Blu.png","./811_Hill1a.png":"img/islands/811_Hill1a.png","./9A3_Hill1b.png":"img/islands/9A3_Hill1b.png","./D81_Hill2_Blu-a.png":"img/islands/D81_Hill2_Blu-a.png","./FBD_Hill1c.png":"img/islands/FBD_Hill1c.png","./volcano.png":"img/islands/volcano.png"}],"map.js":[function(require,module,exports) {
+},{"./811_Hill1a.png":"img/islands/811_Hill1a.png","./D81_Hill2_Blu-a.png":"img/islands/D81_Hill2_Blu-a.png","./FBD_Hill1c.png":"img/islands/FBD_Hill1c.png","./9A3_Hill1b.png":"img/islands/9A3_Hill1b.png","./mermaid_stone.png":"img/islands/mermaid_stone.png","./volcano.png":"img/islands/volcano.png","./pirate-ship.png":"img/islands/pirate-ship.png","./57Z_Hill_Test_Blu.png":"img/islands/57Z_Hill_Test_Blu.png"}],"map.js":[function(require,module,exports) {
 "use strict";
 
 var _volcano = _interopRequireDefault(require("./img/islands/volcano.png"));
@@ -186,59 +192,79 @@ for (var i = 0; i < islands.length; i++) {
 
 var square = {
   type: "square",
-  x: getRandomInt(canvas.width) % (3 * canvas.width),
-  y: getRandomInt(canvas.height) % (3 * canvas.height),
+  x: 0,
+  y: 0,
   xx: null,
   yy: null,
   width: 100,
   heigth: 100
 };
 map.push(square);
+
+function drawSquare() {
+  // ctx.clearRect(0,canvas.width, 0, canvas.height)
+  ctx.strokeStyle = 'rgba(10, 100, 190, 0.05)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+
+  for (var _i = square.y + 0.5; _i <= canvas.height; _i += 60) {
+    ctx.moveTo(0, _i);
+    ctx.lineTo(canvas.width, _i);
+    ctx.stroke();
+  }
+
+  for (var _i2 = square.x; _i2 <= 2 * canvas.width; _i2 += 60) {
+    ctx.moveTo(_i2 * 0.7, 0);
+    ctx.lineTo(_i2, canvas.width);
+    ctx.stroke();
+  }
+}
+
+console.log(square.x);
 var isMouseDown = false;
-var MdX = 0;
-var MdY = 0; // let island = {x: 0, y: 0}; 
+var mouseX;
+var mouseY; // let island = {x: 0, y: 0}; 
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 canvas.addEventListener("mousedown", beginMove);
-canvas.addEventListener("keydown", beginMove);
+canvas.addEventListener("mouseup", endMove);
+document.addEventListener("keydown", beginMove);
+document.addEventListener("keyup", endMove);
 
 function beginMove(e) {
-  if (e.key === 32) {
-    e = new MouseEvent("mousedown", {
-      bubbles: true,
-      cancelable: true,
-      view: window
+  console.log(e.keyCode);
+
+  if (e.keyCode === 32 || e.type == "mousedown") {
+    isMouseDown = true;
+    map.forEach(function (element) {
+      var offsetX = mouseX - element.x;
+      var offsetY = mouseY - element.y;
+      element.xx = offsetX;
+      element.yy = offsetY;
     });
   }
-
-  isMouseDown = true;
-  map.forEach(function (element) {
-    var offsetX = e.offsetX - element.x;
-    var offsetY = e.offsetY - element.y;
-    element.xx = offsetX;
-    element.yy = offsetY;
-  });
 }
 
-canvas.addEventListener("mouseup", function (e) {
+function endMove(e) {
   isMouseDown = false;
-});
+}
+
 canvas.addEventListener("mouseout", function (e) {
   isMouseDown = false;
 });
 canvas.addEventListener("mousemove", function (e) {
-  var x = e.offsetX;
-  var y = e.offsetY;
+  mouseX = e.offsetX;
+  mouseY = e.offsetY;
 
   if (isMouseDown) {
     draw();
     map.forEach(function (element) {
       // console.debug(element.el.xx +" "+ element.el.yy)
-      element.x = (element.xx - x) * -1;
-      element.y = (element.yy - y) * -1;
+      element.x = (element.xx - mouseX) * -1;
+      element.y = (element.yy - mouseY) * -1;
     });
   }
 });
@@ -252,6 +278,7 @@ function draw() {
   //ctx.
   // ctx.fillRect(0,0,canvas.width-100,1000)
   seaBG();
+  drawSquare();
   drawIsland();
 }
 
@@ -294,7 +321,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50193" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53935" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
