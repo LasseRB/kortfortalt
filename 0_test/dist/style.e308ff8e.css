@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Xanh+Mono:ital@1&display=swap');
+
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+canvas, #map{
+    margin: 0 auto;
+    padding: 0;
+    /* min-width: 300px; */
+    width: 100vw; 
+    height: auto;
+   
+}
+h1{
+    font-family: 'Xanh Mono', monospace;
+    text-align: center;
+}
+
+/*# sourceMappingURL=/style.e308ff8e.css.map */

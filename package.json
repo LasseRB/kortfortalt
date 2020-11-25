@@ -1,0 +1,16 @@
+{
+  "name": "kortfortalt",
+  "version": "1.0.0",
+  "description": "test til kort navigation",
+  "main": "./0_test/map.js",
+  "scripts": {
+    "dev": "parcel 0_test/index.html  "
+  },
+  "author": "Lasse",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "paths": "^0.1.1"
+  }
+}
