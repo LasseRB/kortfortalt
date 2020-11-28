@@ -186,7 +186,7 @@ function drawElements(time){
                     el.x = square.x + window.innerWidth + 100;
                 }
                 ctx.drawImage(el.img,el.x, el.y, (el.img.naturalWidth-10) * el.swidth, (el.img.naturalHeight-10) * el.swidth);
-                el.x -= time * el.swidth/50;
+                el.x -= time * el.swidth/25;
             }
         // drawXY(el,el.x,el.y);
         ctx.restore();
