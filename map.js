@@ -1,5 +1,5 @@
-import volcano from "./img/islands/volcano.png";
-import assets from "./img/islands/*.png";
+import cloud_assets from "./img/clouds/*.png";
+import island_assets from "./img/islands/*.png";
 // import path from 'path'
 // import fs from 'fs'
 // const fs = require("fs")
@@ -8,29 +8,33 @@ import assets from "./img/islands/*.png";
 // const directoryPath = path.join(__dirname, '/img/islands');
 // //passsing directoryPath and callback function
 
-let islands = [];
-for(var key in assets){
-    islands.push(assets[key]);}
+// let islands = [];
+// for(var key in island_assets){
+//     islands.push(island_assets[key]);}
+
 
 const canvas = document.getElementById('map');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = 800;
 
-
+let start = 0;
 
 let map =[];
-for(let i = 0; i < islands.length; i++){
+let islandAssets = Object.keys(island_assets)
+let i = 0;
+for(const key of islandAssets){
+    i++;
     let island ={
         type:"island",
-        x:getRandomInt(canvas.width) * i  % (3 * canvas.width),
+        x:getRandomInt(canvas.width) * i % (3 * canvas.width),
         y:getRandomInt(canvas.height) * i % (3 * canvas.height),
         xx:null,
         yy:null,
-        width:null,
-        heigth:null,
+        swidth:getRandomFloat(),
+        sheigth:100*getRandomInt(10),
         img: new Image(),
-        imgsrc: islands[i]
+        imgsrc: island_assets[key]
         }
         //! set fields that can be set in the object
     island.img.src = island.imgsrc;
@@ -39,14 +43,37 @@ for(let i = 0; i < islands.length; i++){
  map.push(island);
 }
 
+
+let cloudAssets = Object.keys(cloud_assets);
+i = 0;
+for(const key of cloudAssets){
+    i+=5;
+    let cloud ={
+        type:"cloud",
+        x:getRandomInt(canvas.width) *i % (3 * canvas.width),
+        y:getRandomInt(canvas.height)*i % (3 * canvas.height),
+        xx:null,
+        yy:null,
+        swidth:getRandomFloat(),
+        sheigth:getRandomInt(10),
+        img: new Image(),
+        imgsrc: cloud_assets[key]
+        }
+        //! set fields that can be set in the object
+    cloud.img.src = cloud.imgsrc;
+    cloud.width = cloud.img.naturalWidth;
+    cloud.height = cloud.img.naturalHeight;
+ map.push(cloud);
+}
+
 let square ={
     type:"square",
         x:0,
         y:0,
         xx:null,
         yy:null,
-        width:100,
-        heigth:100
+        swidth:100,
+        sheigth:100
 }
 map.push(square);
 function drawSquare(){
@@ -68,10 +95,13 @@ function drawSquare(){
         
     }
 
-    
+    ctx.font = "40pt Calibri";
+    ctx.fillStyle ="black";
+    ctx.fillText(square.x, 0, 50); 
+    ctx.fillText(square.y, 100, 50);   
 }
 
-console.log(square.x)
+
 
 
 let isMouseDown = false;
@@ -82,6 +112,9 @@ let mouseY;
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
+function getRandomFloat() {
+  return Math.random();
+}
 canvas.addEventListener("mousedown", beginMove);
 canvas.addEventListener("mouseup", endMove);
 document.addEventListener("keydown", beginMove);
@@ -128,23 +161,58 @@ function seaBG(){
     ctx.fillRect(0,0,canvas.width,1500);
 }
 
-function draw(){
+function draw(time){
     //ctx.
     // ctx.fillRect(0,0,canvas.width-100,1000)
+  
     seaBG();
     drawSquare();
-    drawIsland();
-      
+    drawElements(time);
+  
 }
 
-function drawIsland(){
+function drawElements(time){
 
- map.forEach(island =>{ 
-     if(island.type === "island"){
+ map.forEach(el =>{ 
+     if(el.type === "island" || el.type === "cloud"){
+        ctx.save();
+            if(el.type==="cloud"){
+                ctx.shadowColor = "rgba(10,20,20,0.3)";
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = -10;
+                ctx.shadowOffsetY = 160;
+               
+                if( el.x < square.x-el.width-canvas.width ){
+                    el.x = square.x + window.innerWidth + 100;
+                }
+                ctx.drawImage(el.img,el.x, el.y, (el.img.naturalWidth-10) * el.swidth, (el.img.naturalHeight-10) * el.swidth);
+                el.x -= time * el.swidth/50;
+            }
+        // drawXY(el,el.x,el.y);
+        ctx.restore();
+        ctx.drawImage(el.img,el.x, el.y, el.img.naturalWidth * el.swidth, el.img.naturalHeight * el.swidth);
+       
           
-            ctx.drawImage(island.img,island.x, island.y);
 } });
+
+function drawXY(element,x,y){
+    ctx.font = "40pt Calibri";
+    ctx.fillStyle ="black";
+    ctx.fillText(element.x, x, y);
+    ctx.fillText(element.y, x+100, y);
 }
-setInterval(function(){ 
-    draw();
-}, 1);
+
+}
+function step(time){
+    let progress = (time - start)%10;
+    // ctx.clearRect(0,0,canvas.width, canvas.height);
+    draw(progress);
+   
+    requestAnimationFrame(step);
+}
+window.requestAnimationFrame(step);
+// setInterval(function(){ 
+//     draw();
+// }, 1);
+
+// window.onload( draw());

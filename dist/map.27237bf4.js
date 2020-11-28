@@ -117,39 +117,54 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"img/islands/volcano.png":[function(require,module,exports) {
-module.exports = "/volcano.8be98ed6.png";
+})({"img/clouds/cloud-8094.png":[function(require,module,exports) {
+module.exports = "/cloud-8094.2d304976.png";
+},{}],"img/clouds/cloud-8100.png":[function(require,module,exports) {
+module.exports = "/cloud-8100.e0817346.png";
+},{}],"img/clouds/cloud-8114.png":[function(require,module,exports) {
+module.exports = "/cloud-8114.e3465e4a.png";
+},{}],"img/clouds/cloud-8116.png":[function(require,module,exports) {
+module.exports = "/cloud-8116.b06bdfe9.png";
+},{}],"img/clouds/*.png":[function(require,module,exports) {
+module.exports = {
+  "cloud-8094": require("./cloud-8094.png"),
+  "cloud-8100": require("./cloud-8100.png"),
+  "cloud-8114": require("./cloud-8114.png"),
+  "cloud-8116": require("./cloud-8116.png")
+};
+},{"./cloud-8094.png":"img/clouds/cloud-8094.png","./cloud-8100.png":"img/clouds/cloud-8100.png","./cloud-8114.png":"img/clouds/cloud-8114.png","./cloud-8116.png":"img/clouds/cloud-8116.png"}],"img/islands/57Z_Hill_Test_Blu.png":[function(require,module,exports) {
+module.exports = "/57Z_Hill_Test_Blu.5c6282b1.png";
 },{}],"img/islands/811_Hill1a.png":[function(require,module,exports) {
 module.exports = "/811_Hill1a.a3a7150a.png";
+},{}],"img/islands/9A3_Hill1b.png":[function(require,module,exports) {
+module.exports = "/9A3_Hill1b.de1dcb50.png";
 },{}],"img/islands/D81_Hill2_Blu-a.png":[function(require,module,exports) {
 module.exports = "/D81_Hill2_Blu-a.17271165.png";
 },{}],"img/islands/FBD_Hill1c.png":[function(require,module,exports) {
 module.exports = "/FBD_Hill1c.2ed334e7.png";
-},{}],"img/islands/9A3_Hill1b.png":[function(require,module,exports) {
-module.exports = "/9A3_Hill1b.de1dcb50.png";
 },{}],"img/islands/mermaid_stone.png":[function(require,module,exports) {
 module.exports = "/mermaid_stone.d6a89490.png";
 },{}],"img/islands/pirate-ship.png":[function(require,module,exports) {
 module.exports = "/pirate-ship.6d34c956.png";
-},{}],"img/islands/57Z_Hill_Test_Blu.png":[function(require,module,exports) {
-module.exports = "/57Z_Hill_Test_Blu.5c6282b1.png";
+},{}],"img/islands/volcano.png":[function(require,module,exports) {
+module.exports = "/volcano.8be98ed6.png";
 },{}],"img/islands/*.png":[function(require,module,exports) {
 module.exports = {
+  "57Z_Hill_Test_Blu": require("./57Z_Hill_Test_Blu.png"),
   "811_Hill1a": require("./811_Hill1a.png"),
+  "9A3_Hill1b": require("./9A3_Hill1b.png"),
   "D81_Hill2_Blu-a": require("./D81_Hill2_Blu-a.png"),
   "FBD_Hill1c": require("./FBD_Hill1c.png"),
-  "9A3_Hill1b": require("./9A3_Hill1b.png"),
   "mermaid_stone": require("./mermaid_stone.png"),
-  "volcano": require("./volcano.png"),
   "pirate-ship": require("./pirate-ship.png"),
-  "57Z_Hill_Test_Blu": require("./57Z_Hill_Test_Blu.png")
+  "volcano": require("./volcano.png")
 };
-},{"./811_Hill1a.png":"img/islands/811_Hill1a.png","./D81_Hill2_Blu-a.png":"img/islands/D81_Hill2_Blu-a.png","./FBD_Hill1c.png":"img/islands/FBD_Hill1c.png","./9A3_Hill1b.png":"img/islands/9A3_Hill1b.png","./mermaid_stone.png":"img/islands/mermaid_stone.png","./volcano.png":"img/islands/volcano.png","./pirate-ship.png":"img/islands/pirate-ship.png","./57Z_Hill_Test_Blu.png":"img/islands/57Z_Hill_Test_Blu.png"}],"map.js":[function(require,module,exports) {
+},{"./57Z_Hill_Test_Blu.png":"img/islands/57Z_Hill_Test_Blu.png","./811_Hill1a.png":"img/islands/811_Hill1a.png","./9A3_Hill1b.png":"img/islands/9A3_Hill1b.png","./D81_Hill2_Blu-a.png":"img/islands/D81_Hill2_Blu-a.png","./FBD_Hill1c.png":"img/islands/FBD_Hill1c.png","./mermaid_stone.png":"img/islands/mermaid_stone.png","./pirate-ship.png":"img/islands/pirate-ship.png","./volcano.png":"img/islands/volcano.png"}],"map.js":[function(require,module,exports) {
 "use strict";
 
-var _volcano = _interopRequireDefault(require("./img/islands/volcano.png"));
+var _ = _interopRequireDefault(require("./img/clouds/*.png"));
 
-var _ = _interopRequireDefault(require("./img/islands/*.png"));
+var _2 = _interopRequireDefault(require("./img/islands/*.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -159,29 +174,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // //joining path of directory 
 // const directoryPath = path.join(__dirname, '/img/islands');
 // //passsing directoryPath and callback function
-var islands = [];
-
-for (var key in _.default) {
-  islands.push(_.default[key]);
-}
-
+// let islands = [];
+// for(var key in island_assets){
+//     islands.push(island_assets[key]);}
 var canvas = document.getElementById('map');
 var ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = 800;
+var start = 0;
 var map = [];
+var islandAssets = Object.keys(_2.default);
+var i = 0;
 
-for (var i = 0; i < islands.length; i++) {
+for (var _i = 0, _islandAssets = islandAssets; _i < _islandAssets.length; _i++) {
+  var key = _islandAssets[_i];
+  i++;
   var island = {
     type: "island",
     x: getRandomInt(canvas.width) * i % (3 * canvas.width),
     y: getRandomInt(canvas.height) * i % (3 * canvas.height),
     xx: null,
     yy: null,
-    width: null,
-    heigth: null,
+    swidth: getRandomFloat(),
+    sheigth: 100 * getRandomInt(10),
     img: new Image(),
-    imgsrc: islands[i]
+    imgsrc: _2.default[key]
   }; //! set fields that can be set in the object
 
   island.img.src = island.imgsrc;
@@ -190,14 +207,38 @@ for (var i = 0; i < islands.length; i++) {
   map.push(island);
 }
 
+var cloudAssets = Object.keys(_.default);
+i = 0;
+
+for (var _i2 = 0, _cloudAssets = cloudAssets; _i2 < _cloudAssets.length; _i2++) {
+  var _key = _cloudAssets[_i2];
+  i += 5;
+  var cloud = {
+    type: "cloud",
+    x: getRandomInt(canvas.width) * i % (3 * canvas.width),
+    y: getRandomInt(canvas.height) * i % (3 * canvas.height),
+    xx: null,
+    yy: null,
+    swidth: getRandomFloat(),
+    sheigth: getRandomInt(10),
+    img: new Image(),
+    imgsrc: _.default[_key]
+  }; //! set fields that can be set in the object
+
+  cloud.img.src = cloud.imgsrc;
+  cloud.width = cloud.img.naturalWidth;
+  cloud.height = cloud.img.naturalHeight;
+  map.push(cloud);
+}
+
 var square = {
   type: "square",
   x: 0,
   y: 0,
   xx: null,
   yy: null,
-  width: 100,
-  heigth: 100
+  swidth: 100,
+  sheigth: 100
 };
 map.push(square);
 
@@ -207,26 +248,34 @@ function drawSquare() {
   ctx.lineWidth = 1;
   ctx.beginPath();
 
-  for (var _i = square.y + 0.5; _i <= canvas.height; _i += 60) {
-    ctx.moveTo(0, _i);
-    ctx.lineTo(canvas.width, _i);
+  for (var _i3 = square.y + 0.5; _i3 <= canvas.height; _i3 += 60) {
+    ctx.moveTo(0, _i3);
+    ctx.lineTo(canvas.width, _i3);
     ctx.stroke();
   }
 
-  for (var _i2 = square.x; _i2 <= 2 * canvas.width; _i2 += 60) {
-    ctx.moveTo(_i2 * 0.7, 0);
-    ctx.lineTo(_i2, canvas.width);
+  for (var _i4 = square.x; _i4 <= 2 * canvas.width; _i4 += 60) {
+    ctx.moveTo(_i4 * 0.7, 0);
+    ctx.lineTo(_i4, canvas.width);
     ctx.stroke();
   }
+
+  ctx.font = "40pt Calibri";
+  ctx.fillStyle = "black";
+  ctx.fillText(square.x, 0, 50);
+  ctx.fillText(square.y, 100, 50);
 }
 
-console.log(square.x);
 var isMouseDown = false;
 var mouseX;
 var mouseY; // let island = {x: 0, y: 0}; 
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
+}
+
+function getRandomFloat() {
+  return Math.random();
 }
 
 canvas.addEventListener("mousedown", beginMove);
@@ -274,26 +323,59 @@ function seaBG() {
   ctx.fillRect(0, 0, canvas.width, 1500);
 }
 
-function draw() {
+function draw(time) {
   //ctx.
   // ctx.fillRect(0,0,canvas.width-100,1000)
   seaBG();
   drawSquare();
-  drawIsland();
+  drawElements(time);
 }
 
-function drawIsland() {
-  map.forEach(function (island) {
-    if (island.type === "island") {
-      ctx.drawImage(island.img, island.x, island.y);
+function drawElements(time) {
+  map.forEach(function (el) {
+    if (el.type === "island" || el.type === "cloud") {
+      ctx.save();
+
+      if (el.type === "cloud") {
+        ctx.shadowColor = "rgba(10,20,20,0.3)";
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = -10;
+        ctx.shadowOffsetY = 160;
+
+        if (el.x < square.x - el.width - canvas.width) {
+          el.x = square.x + window.innerWidth + 100;
+        }
+
+        ctx.drawImage(el.img, el.x, el.y, (el.img.naturalWidth - 10) * el.swidth, (el.img.naturalHeight - 10) * el.swidth);
+        el.x -= time * el.swidth / 50;
+      } // drawXY(el,el.x,el.y);
+
+
+      ctx.restore();
+      ctx.drawImage(el.img, el.x, el.y, el.img.naturalWidth * el.swidth, el.img.naturalHeight * el.swidth);
     }
   });
+
+  function drawXY(element, x, y) {
+    ctx.font = "40pt Calibri";
+    ctx.fillStyle = "black";
+    ctx.fillText(element.x, x, y);
+    ctx.fillText(element.y, x + 100, y);
+  }
 }
 
-setInterval(function () {
-  draw();
-}, 1);
-},{"./img/islands/volcano.png":"img/islands/volcano.png","./img/islands/*.png":"img/islands/*.png"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+function step(time) {
+  var progress = (time - start) % 10; // ctx.clearRect(0,0,canvas.width, canvas.height);
+
+  draw(progress);
+  requestAnimationFrame(step);
+}
+
+window.requestAnimationFrame(step); // setInterval(function(){ 
+//     draw();
+// }, 1);
+// window.onload( draw());
+},{"./img/clouds/*.png":"img/clouds/*.png","./img/islands/*.png":"img/islands/*.png"}],"../../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -321,7 +403,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53935" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52464" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
