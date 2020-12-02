@@ -347,7 +347,7 @@ function drawElements(time) {
         }
 
         ctx.drawImage(el.img, el.x, el.y, (el.img.naturalWidth - 10) * el.swidth, (el.img.naturalHeight - 10) * el.swidth);
-        el.x -= time * el.swidth / 50;
+        el.x -= time * el.swidth + 1;
       } // drawXY(el,el.x,el.y);
 
 
@@ -365,7 +365,7 @@ function drawElements(time) {
 }
 
 function step(time) {
-  var progress = (time - start) % 10; // ctx.clearRect(0,0,canvas.width, canvas.height);
+  var progress = (time - start) % 1; // ctx.clearRect(0,0,canvas.width, canvas.height);
 
   draw(progress);
   requestAnimationFrame(step);
@@ -403,7 +403,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52464" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51039" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

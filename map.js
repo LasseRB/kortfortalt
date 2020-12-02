@@ -181,12 +181,13 @@ function drawElements(time){
                 ctx.shadowBlur = 10;
                 ctx.shadowOffsetX = -10;
                 ctx.shadowOffsetY = 160;
-               
+              
                 if( el.x < square.x-el.width-canvas.width ){
                     el.x = square.x + window.innerWidth + 100;
                 }
+                
                 ctx.drawImage(el.img,el.x, el.y, (el.img.naturalWidth-10) * el.swidth, (el.img.naturalHeight-10) * el.swidth);
-                el.x -= time * el.swidth/25;
+                el.x -= time * el.swidth + 1;
             }
         // drawXY(el,el.x,el.y);
         ctx.restore();
@@ -204,7 +205,7 @@ function drawXY(element,x,y){
 
 }
 function step(time){
-    let progress = (time - start)%10;
+    let progress = (time - start)%1;
     // ctx.clearRect(0,0,canvas.width, canvas.height);
     draw(progress);
    
